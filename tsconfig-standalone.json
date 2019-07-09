@@ -2,7 +2,7 @@
   "compileOnSave": false,
   "compilerOptions": {
     "baseUrl": "./",
-    "outDir": "./dist-standalone/rotator",
+    "outDir": "./dist-standalone",
     "sourceMap": true,
     "declaration": false,
     "module": "commonjs",

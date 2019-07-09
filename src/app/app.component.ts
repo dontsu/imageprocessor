@@ -19,10 +19,13 @@ export class AppComponent {
 
   }
   removeOldCanvas() {
-    let existingCanvas = document.getElementsByClassName("rotated-canvas-img");
-    if (existingCanvas && existingCanvas.length > 0) {
-      for (let i = 0; i < existingCanvas.length; i++) {
-        existingCanvas[i].remove();
+    let canvas;
+    while (true) {
+      canvas = document.getElementsByClassName("rotated-canvas-img")
+      if (canvas && canvas.length > 0) {
+        canvas[0].remove();
+      } else {
+        break;
       }
     }
     this.error = undefined;

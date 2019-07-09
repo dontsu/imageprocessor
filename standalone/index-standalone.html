@@ -6,10 +6,7 @@
   <script>var exports = {"__esModule": true};</script>
   <script src="require.js" data-main="main-standalone"></script>
   <style>
-    img {
-      width: 80px;
-      height: 80px;
-    }
+
 
     .btn {
       width: 40px;
@@ -20,43 +17,72 @@
 </head>
 <body>
 <div>
-  <img id="aa.jpg" src="aa.jpg"> <img class="btn" src="rotate.png" onclick="rotateImg('aa.jpg')">
+  <input type="radio" name="images" value="aa.jpg" onclick="drawSelectedImage(this)"><img id="aa.jpg" src="aa.jpg">
 </div>
 <div>
-  <img id="blue-fox-min1.png" src="blue-fox-min1.png"> <img class="btn" src="rotate.png" onclick="rotateImg('blue-fox-min1.png')">
+  <input type="radio" name="images" value="blue-fox-min1.png" onclick="drawSelectedImage(this)"><img id="blue-fox-min1.png" src="blue-fox-min1.png">
 </div>
 <div>
-  <img id="img.jpeg" src="img.jpeg"> <img class="btn" src="rotate.png" onclick="rotateImg('img.jpeg')">
+  <input type="radio" name="images" value="img.jpeg" onclick="drawSelectedImage(this)">
+  <img id="img.jpeg" src="img.jpeg">
 </div>
 <div>
   <input type="text" placeholder="Angel to Rotate" id="angle"/>
+  <img class="btn" src="rotate.png" onclick="rotateImg()">
 </div>
 <script>
 
-  function rotateImg(imgName) {
+  function rotateImg() {
     var rotator = new window.Rotator();
-    //obtain the current image data
-    var canvas = document.createElement('canvas');
-    canvas.id = "initial-canvas";
-    var context = canvas.getContext('2d');
-    var imgLoad = document.getElementById(imgName);
-    imgLoad.crossOrigin = "Anonymous";
-    context.drawImage(imgLoad, imgLoad.width, imgLoad.height);
-    imgLoad.onload = function() {
-      var img = context.getImageData(0, 0, imgLoad.width, imgLoad.height);
+    if (rotator) {
+      var canvas = document.getElementById('initial-canvas');
+      var img = canvas.getContext('2d').getImageData(0, 0, canvas.width, canvas.height);
       //rotate
       var angle = document.getElementById("angle");
-      var newImg = rotator.rotate(img, parseInt(angle));
-      //draw new image
-      canvas = document.createElement("canvas");
-      canvas.height = newImg.height;
-      canvas.width = newImg.width;
-      canvas.style.border = "1px solid red";
-      context = canvas.getContext("2d");
-      context.putImageData(newImg, 0, 0);
-      document.body.appendChild(canvas);
+      try {
+        var newImg = rotator.rotate(img, parseInt(angle.value));
+        //draw new image
+        canvas = document.getElementById("rotated-canvas");
+        var context;
+        if (!canvas) {
+          canvas = document.createElement("canvas");
+          canvas.id = 'rotated-canvas';
+          context = canvas.getContext("2d");
+        } else {
+          context = canvas.getContext("2d");
+          context.clearRect(0, 0, canvas.width, canvas.height);
+        }
+        canvas.height = newImg.height;
+        canvas.width = newImg.width;
+        canvas.style.border = "1px solid red";
+        context.putImageData(newImg, 0, 0);
+        document.body.appendChild(canvas);
+      } catch (e) {
+        console.error(e);
+      }
     }
 
+  }
+
+  function drawSelectedImage(imgName){
+    var canvas = document.getElementById('initial-canvas');
+    if(!canvas) {
+      canvas = document.createElement('canvas');
+    }
+    var canvasRotated = document.getElementById('rotated-canvas');
+    if(canvasRotated) {
+      canvasRotated.remove();
+    }
+    var context = canvas.getContext('2d');
+    context.clearRect(0, 0, canvas.width, canvas.height);
+    var imgLoad = document.getElementById(imgName.value);
+    canvas.id = "initial-canvas";
+    canvas.width = imgLoad.width;
+    canvas.height = imgLoad.height;
+    document.body.appendChild(canvas);
+    var imgLoad = document.getElementById(imgName.value);
+    imgLoad.crossOrigin = "Anonymous";
+    context.drawImage(imgLoad, 0,0);
   }
 </script>
 </body>
