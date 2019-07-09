@@ -1,10 +1,20 @@
 
 <h2>{{title}}: </h2>
-<canvas id="my-canvas" width="400px" height="200px"></canvas>
-<ng-container *ngFor="">
-  <input type="radio"/>
-  <img src="" />
-</ng-container>
-<input type="number" name="angle" [(ngModel)]="angle" [min]="0" [max]="360" placeholder="Angle to rotate">
-<button (click)="rotateImg()">Click me!</button>
+<div class="img-container">
+  <input type="radio" name="options" value="assets/img.jpeg" [(ngModel)]="imgUrl" (ngModelChange)="removeOldCanvas()"/><img src="assets/img.jpeg" />
+</div>
+<div class="img-container">
+  <input type="radio" name="options" value="assets/aa.jpg" [(ngModel)]="imgUrl" (ngModelChange)="removeOldCanvas()"/><img src="assets/aa.jpg" />
+</div>
+<div class="img-container">
+  <input type="radio" name="options" value="assets/blue-fox-min1.png" [(ngModel)]="imgUrl" (ngModelChange)="removeOldCanvas()"/><img src="assets/blue-fox-min1.png" />
+</div>
+  Selected img: {{imgUrl}}
+<div class="btn-container">
+  <label>Angle:</label><input type="number" name="angle" [(ngModel)]="angle" [min]="0" [max]="360" placeholder="Angle to rotate">
+  <button (click)="rotateImg()" [disabled]="!imgUrl || !angle">Click me!</button>
+  <div class="error" *ngIf="error"> Rotation failed: {{error}}</div>
+</div>
+<br>
+<canvas id="my-canvas" title="Original Image"></canvas>
 

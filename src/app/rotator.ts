@@ -11,7 +11,7 @@ export class Rotator {
     if (!angle) {
       throw new Error('Angle is not provided');
     }
-    if (0 < angle < 360) {
+    if (angle < 0 || angle > 360) {
       throw new Error('Provided angle is outside the [0..360] range');
     }
     const dest = new ImageData(imageData.width, imageData.height);

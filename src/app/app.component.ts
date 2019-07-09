@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import {Rotator} from './rotator';
+import {forEach} from '@angular/router/src/utils/collection';
 
 @Component({
   selector: 'app-root',
@@ -11,12 +12,21 @@ export class AppComponent {
   canvas: HTMLCanvasElement;
   context: CanvasRenderingContext2D;
   angle = 90;
-  images: Array<any>;
+  imgUrl: string;
+  error: string;
 
   constructor() {
 
   }
-
+  removeOldCanvas() {
+    let existingCanvas = document.getElementsByClassName("rotated-canvas-img");
+    if (existingCanvas && existingCanvas.length > 0) {
+      for (let i = 0; i < existingCanvas.length; i++) {
+        existingCanvas[i].remove();
+      }
+    }
+    this.error = undefined;
+  }
 
   convertURIToImageData(URI): Promise<ImageData> {
     return new Promise((resolve, reject) => {
@@ -36,26 +46,21 @@ export class AppComponent {
   }
 
   rotateImg() {
-    this.convertURIToImageData('assets/img.jpeg').then((img) => {
-      let newImg = new Rotator().rotate(img, this.angle);
-      let canvas = document.createElement("canvas");
-      canvas.height = newImg.height;
-      canvas.width = newImg.width;
-      canvas.style.border = "1px solid red";
-      let context = canvas.getContext("2d");
-      context.putImageData(newImg, 0, 0);
-      document.body.appendChild(canvas);
+    this.convertURIToImageData(this.imgUrl).then((img) => {
+      try {
+        let newImg = new Rotator().rotate(img, this.angle);
+        let canvas = document.createElement("canvas");
+        canvas.className = "rotated-canvas-img";
+        canvas.title = 'Rotated Image';
+        canvas.height = newImg.height;
+        canvas.width = newImg.width;
+        canvas.style.border = "1px solid red";
+        let context = canvas.getContext("2d");
+        context.putImageData(newImg, 0, 0);
+        document.body.appendChild(canvas);
+      } catch (e) {
+        this.error =  e;
+      }
     });
-    /*let img = new ImageData(2,2);
-    img.data.set([1,1,1,1,2,2,2,2,3,3,3,3,4,4,4,4])
-    let newImg = new Rotator().rotate(img, this.angle);
-    let canvas = document.createElement("canvas");
-    canvas.height = newImg.height;
-    canvas.width = newImg.width;
-    canvas.style.border = "1px solid red";
-    canvas.style.marginLeft = "10px";
-    let context = canvas.getContext("2d");
-    context.putImageData(newImg, 0, -0.5 * newImg.height);
-    document.body.appendChild(canvas);*/
   }
 }
