@@ -9,10 +9,14 @@ It has no unit tests except auto-generated ones.
 
 ## Run the angular app
 `npm install` to download all dependencies
+
 `npm run` or `ng serve` to run the localhost node app available at `http://localhost:4200/ `
 
 ## Running standalone 
 `npm run build:standalone` - this will generate a dist-standalone folder with a HTML page that can be simply opened in browser
+
+## Performance API usage
+I've added the performance API in the standalone page. When a rotation action is executed, console displays the time in milliseconds.
 
 ## Inspiration sources:
 https://stackoverflow.com/questions/27022915/convert-image-pixel-data-to-coordinate-array
