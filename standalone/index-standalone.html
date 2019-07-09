@@ -40,7 +40,13 @@
       //rotate
       var angle = document.getElementById("angle");
       try {
+        var startTime;
+        var endTime;
+
+        startTime = performance.now();
         var newImg = rotator.rotate(img, parseInt(angle.value));
+        endTime = performance.now();
+        console.log(endTime - startTime);
         //draw new image
         canvas = document.getElementById("rotated-canvas");
         var context;
