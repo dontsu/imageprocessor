@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>ImageProcessor</title>
+  <script>var exports = {"__esModule": true};</script>
+  <script src="require.js" data-main="main-standalone"></script>
+  <style>
+    img {
+      width: 80px;
+      height: 80px;
+    }
+
+    .btn {
+      width: 40px;
+      height: 40px;
+    }
+  </style>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+<div>
+  <img id="aa.jpg" src="aa.jpg"> <img class="btn" src="rotate.png" onclick="rotateImg('aa.jpg')">
+</div>
+<div>
+  <img id="blue-fox-min1.png" src="blue-fox-min1.png"> <img class="btn" src="rotate.png" onclick="rotateImg('blue-fox-min1.png')">
+</div>
+<div>
+  <img id="img.jpeg" src="img.jpeg"> <img class="btn" src="rotate.png" onclick="rotateImg('img.jpeg')">
+</div>
+<div>
+  <input type="text" placeholder="Angel to Rotate" id="angle"/>
+</div>
+<script>
+
+  function rotateImg(imgName) {
+    var rotator = new window.Rotator();
+    //obtain the current image data
+    var canvas = document.createElement('canvas');
+    canvas.id = "initial-canvas";
+    var context = canvas.getContext('2d');
+    var imgLoad = document.getElementById(imgName);
+    imgLoad.crossOrigin = "Anonymous";
+    context.drawImage(imgLoad, imgLoad.width, imgLoad.height);
+    imgLoad.onload = function() {
+      var img = context.getImageData(0, 0, imgLoad.width, imgLoad.height);
+      //rotate
+      var angle = document.getElementById("angle");
+      var newImg = rotator.rotate(img, parseInt(angle));
+      //draw new image
+      canvas = document.createElement("canvas");
+      canvas.height = newImg.height;
+      canvas.width = newImg.width;
+      canvas.style.border = "1px solid red";
+      context = canvas.getContext("2d");
+      context.putImageData(newImg, 0, 0);
+      document.body.appendChild(canvas);
+    }
+
+  }
+</script>
+</body>
+</html>

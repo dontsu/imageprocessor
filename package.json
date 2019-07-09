@@ -7,7 +7,9 @@
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "build:standalone:copy": "copyfiles -f ./node_modules/requirejs/require.js ./dist-standalone && copyfiles -f ./standalone/**/* ./dist-standalone && copyfiles -f ./standalone/*.js ./dist-standalone && copyfiles -f ./standalone/*.html ./dist-standalone",
+    "build:standalone": "npm run build:standalone:copy && tsc -p tsconfig-standalone.json "
   },
   "private": true,
   "dependencies": {
@@ -20,7 +22,9 @@
     "@angular/platform-browser": "~7.0.0",
     "@angular/platform-browser-dynamic": "~7.0.0",
     "@angular/router": "~7.0.0",
+    "copyfiles": "^2.1.0",
     "core-js": "^2.5.4",
+    "requirejs": "^2.3.6",
     "rxjs": "~6.3.3",
     "zone.js": "~0.8.26"
   },
