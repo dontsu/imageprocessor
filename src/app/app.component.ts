@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import {Rotator} from './rotator';
-import {forEach} from '@angular/router/src/utils/collection';
 
 @Component({
   selector: 'app-root',

@@ -12,7 +12,7 @@
   Selected img: {{imgUrl}}
 <div class="btn-container">
   <label>Angle:</label><input type="number" name="angle" [(ngModel)]="angle" [min]="0" [max]="360" placeholder="Angle to rotate">
-  <button (click)="rotateImg()" [disabled]="!imgUrl || !angle">Click me!</button>
+  <button id="clickMe" (click)="rotateImg()" [disabled]="!imgUrl || !angle">Click me!</button>
   <div class="error" *ngIf="error"> Rotation failed: {{error}}</div>
 </div>
 <br>
