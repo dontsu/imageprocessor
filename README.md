@@ -12,6 +12,8 @@ It has no unit tests except auto-generated ones.
 
 `npm run` or `ng serve` to run the localhost node app available at `http://localhost:4200/ `
 
+Make sure to check the Jasmine tests for Rotator class
+
 ## Running standalone 
 `npm run build:standalone` - this will generate a dist-standalone folder with a HTML page that can be simply opened in browser
 
@@ -26,8 +28,10 @@ http://www.leptonica.org/rotation.html
 
 ## Running unit tests
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+Run `ng test` to execute the unit tests via [Karma]
+I've covered additional scenarios for my app.component as well as, I've created the basic tests for
+ Rotator class covering all expected exceptions and one test to check the rotated image result.
 
 ## Running end-to-end tests
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+Run `ng e2e` to execute the end-to-end tests via [Protractor] - this is yet to be done.
